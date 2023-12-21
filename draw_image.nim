@@ -12,7 +12,8 @@ License (MPL2)::
   v.2.0. If a copy of the MPL was not distributed with this file,
   You can obtain one at https://mozilla.org/MPL/2.0/.
 ]##
-import os
+when isMainModule:
+  import os
 
 import app
 import cairo
@@ -220,6 +221,7 @@ when isMainModule:
     let argc = os.paramCount()
     var argv: seq[cstring]
     for i in 1..argc:
-        argv.add(os.paramStr(i))
+        let s = os.paramStr(i)
+        argv.add(cstring(s))
     discard main(argc, argv)
 

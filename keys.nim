@@ -29,7 +29,7 @@ type
     send_event {.importc.}: int8
     time {.importc.}: uint32
     state {.importc.}: uint32
-    keyval {.importc.}: int32
+    keyval* {.importc.}: int32
     length {.importc.}: int32
     str {.importc.}: cstring
     hardware_keycode {.importc.}: uint16

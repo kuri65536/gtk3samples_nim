@@ -13,7 +13,6 @@ License (MPL2)::
   You can obtain one at https://mozilla.org/MPL/2.0/.
 ]##
 import pixbuf
-import window
 
 
 type
@@ -37,6 +36,7 @@ proc gdk_cairo_set_source_pixbuf*(cr: cairo_t, pixbuf: GdkPixbufPtr,
 
 when isMainModule:
   import gtypes
+  import window
 
   type
     app_data = ptr app_data_obj
