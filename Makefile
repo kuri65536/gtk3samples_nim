@@ -1,8 +1,17 @@
+build: \
+       bin/simplec \
+       bin/simple \
+       bin/app \
+       bin/keys \
+       bin/timer \
+       bin/draw_image \
+
+
 bin/keys: keys.nim
 	nim c -o:$@ $<
 
 
-bin/draw_image: draw_image.nim
+bin/draw_image: draw_image.nim gtypes.nim cairo.nim pixbuf.nim
 	nim c -o:$@ --threads:on $<
 
 
