@@ -22,6 +22,7 @@ import window
 
 {.passC: gorge("pkg-config --cflags gtk+-3.0").}
 {.passL: gorge("pkg-config --libs gtk+-3.0").}
+{.emit: "#include <glib-object.h>".}
 
 
 type
@@ -47,11 +48,13 @@ proc g_signal_connect_key*(wgt: GtkWidgetPtr, signal: cstring,
                         fn: callback_keyevents, data: gpointer,
                         closure_notify: gpointer = nil, flags: int = 0
                         ): void =
-    {.emit: "g_signal_connect_data(`wgt`, `signal`, `fn`, `data`, `closure_notify`, `flags`);".}
+    {.emit: """g_signal_connect_data(`wgt`, `signal`, (GCallback)`fn`,
+                                     `data`, `closure_notify`, `flags`);""".}
 
 
 when isMainModule:
   import os
+  import simple
 
   type
     keys = enum
@@ -98,7 +101,7 @@ when isMainModule:
   proc main(argc: int, argv: openarray[cstring]): void =
     var data = app_data_obj()
     var app = gtk_application_new("org.gtk.example", G_APPLICATION_FLAGS_NONE)
-    g_signal_connect(app, "activate", activate, addr(data))
+    g_signal_connect_activate(app, activate, addr(data))
     let status = g_application_run(app, argc, argv)
     g_object_unref (app);
 

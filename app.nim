@@ -17,6 +17,7 @@ License (MPL2)::
 ]##
 {.passC: gorge("pkg-config --cflags gtk+-3.0").}
 {.passL: gorge("pkg-config --libs gtk+-3.0").}
+{.emit: "#include <glib-object.h>".}
 
 import gtypes
 import window
@@ -41,7 +42,8 @@ type
 proc gtk_application_new*(class_string: cstring, flags: GApplicationFlags
                          ): GtkApplicationPtr {.importc: "gtk_application_new".}
 
-proc g_object_unref*(app: GtkApplicationPtr): void {.importc.}
+proc g_object_unref*(app: GtkApplicationPtr): void =
+    {.emit: "g_object_unref((gpointer)`app`);".}
 
 proc g_application_run*(app: GtkApplicationPtr,
                        argc: int, argv: openarray[cstring]): int {.importc.}
@@ -63,7 +65,7 @@ proc g_signal_connect_activate*(app: GtkApplicationPtr,
                                 fn: callback_app, data: gpointer,
                                 closure_notify: gpointer = nil, flags: int = 0
                                 ): void =
-    {.emit: """g_signal_connect_data(`app`, "activate", `fn`, `data`,
+    {.emit: """g_signal_connect_data(`app`, "activate", (GCallback)`fn`, `data`,
                                      `closure_notify`, `flags`);""".}
 
 

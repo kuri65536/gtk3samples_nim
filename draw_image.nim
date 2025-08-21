@@ -26,6 +26,7 @@ import pixbuf
 
 {.passC: gorge("pkg-config --cflags gtk+-3.0").}
 {.passL: gorge("pkg-config --libs gtk+-3.0").}
+{.emit: "#include <glib-object.h>".}
 
 
 type
@@ -49,7 +50,7 @@ proc g_signal_connect_draw*(wgt: GtkWidgetPtr,
                             fn: callback_draw, data: gpointer,
                             closure_notify: gpointer = nil, flags: int = 0
                             ): void =
-    {.emit: """g_signal_connect_data(`wgt`, "draw", `fn`, `data`,
+    {.emit: """g_signal_connect_data(`wgt`, "draw", (GCallback)`fn`, `data`,
                                      `closure_notify`, `flags`);""".}
 
 

@@ -45,7 +45,7 @@ proc g_object_unref(app: GtkApplicationPtr): void {.importc.}
 proc g_application_run(app: GtkApplicationPtr,
                        argc: int, argv: openarray[cstring]): int {.importc.}
 
-proc g_signal_connect(app: GtkApplicationPtr, signal: cstring,
+proc g_signal_connect*(app: GtkApplicationPtr, signal: cstring,
                       fn: callback_app, data: gpointer,
                       closure_notify: gpointer = nil, flags: int = 0
                       ): void {.importc: "g_signal_connect_data".}
