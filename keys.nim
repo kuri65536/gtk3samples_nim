@@ -54,7 +54,6 @@ proc g_signal_connect_key*(wgt: GtkWidgetPtr, signal: cstring,
 
 when isMainModule:
   import os
-  import simple
 
   type
     keys = enum
@@ -66,9 +65,11 @@ when isMainModule:
       buttons: set[keys]
       wgt: GtkWidgetPtr
 
+    #[
     th_data = ref th_data_obj
     th_data_obj = object of RootObj
       data_ptr: app_data
+    ]#
 
   const (wnd_width, wnd_height) = (cint(200), cint(200))
 
@@ -103,12 +104,13 @@ when isMainModule:
     var app = gtk_application_new("org.gtk.example", G_APPLICATION_FLAGS_NONE)
     g_signal_connect_activate(app, activate, addr(data))
     let status = g_application_run(app, argc, argv)
+    discard status
     g_object_unref (app);
 
 
   let argc = os.paramCount()
   var argv: seq[cstring]
   for i in 1..argc:
-      argv.add(os.paramStr(i))
+      argv.add(cstring(os.paramStr(i)))
   main(argc, argv)
 

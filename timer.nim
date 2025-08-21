@@ -64,7 +64,7 @@ when isMainModule:
     let argc = os.paramCount()
     var argv: seq[cstring]
     for i in 1..argc:
-        argv.add(os.paramStr(i))
+        argv.add(cstring(os.paramStr(i)))
     discard main(argc, argv)
 
 
