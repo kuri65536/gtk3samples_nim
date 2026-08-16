@@ -31,7 +31,7 @@ type
 proc g_bytes_unref*(src: GBytes): void {.importc: "g_bytes_unref".}
 ]#
 proc g_bytes_unref*(src: GBytes): void =
-    {.emit: "g_bytes_unref(`src`);".}
+    {.emit: "g_bytes_unref((GBytes*)`src`);".}
 
 #[ segfault
 proc newGBytes*(src: openarray): GBytes {.importc: "g_bytes_new".}
@@ -40,7 +40,9 @@ proc newGBytes*(src: openarray): GBytes {.importc: "g_bytes_new".}
 proc newGBytes*(src: ptr byte, size: cint): GBytes {.importc: "g_bytes_new".}
 ]#
 proc newGBytes*(src: ptr byte, size: cint): GBytes =
-    {.emit: "g_bytes_new(`src`, `size`);".}
+    var tmp: pointer
+    {.emit: "`tmp` = g_bytes_new(`src`, `size`);".}
+    return cast[GBytes](tmp)
 
 
 const

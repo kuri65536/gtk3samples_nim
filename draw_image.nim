@@ -88,6 +88,14 @@ when isMainModule:
 
 
  proc render(buf: var seq[byte]): void =
+  when true:
+    var i = 0
+    while i < len(buf):
+        buf[i] = random.rand(255).uint8
+        buf[i + 1] = random.rand(255).uint8
+        buf[i + 2] = random.rand(255).uint8
+        i += 3
+  else:
     let col1 = byte(random.rand(255))
     let col2 = byte(random.rand(255))
     let col3 = byte(random.rand(255))
