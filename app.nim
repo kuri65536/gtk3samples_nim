@@ -31,7 +31,7 @@ type
   GtkWidgetPtr* = ptr GtkWidget
 
   GApplicationFlags* {.size: sizeof(cint), pure.} = enum
-    G_APPLICATION_FLAGS_NONE = 0
+    G_APPLICATION_DEFAULT_FLAGS = 0
 
   gcallback* = proc(self: gpointer, user_data: gpointer
                     ): void {.cdecl.}
@@ -83,7 +83,7 @@ when isMainModule:
 
 
  proc main(argc: int, argv: openarray[cstring]): int =
-  var app = gtk_application_new("org.gtk.example", G_APPLICATION_FLAGS_NONE)
+  var app = gtk_application_new("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS)
   g_signal_connect_activate(app, activate, nil)
   let status = g_application_run(app, argc, argv)
   g_object_unref (app);

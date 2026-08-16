@@ -208,7 +208,7 @@ when isMainModule:
 
  proc main(argc: int, argv: openarray[cstring]): int =
   var data = app_data_obj()
-  var app = gtk_application_new("org.gtk.example", G_APPLICATION_FLAGS_NONE)
+  var app = gtk_application_new("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS)
   g_signal_connect_activate(app, activate, addr(data))
 
   when false:
